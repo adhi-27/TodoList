@@ -2,11 +2,7 @@ require "date"
 
 class Todo
   def initialize(text, date, completed)
-    if !completed
-      @box = "[ ]"
-    else
-      @box = "[X]"
-    end
+    @completed = completed
     @text = text
     @date = date
   end
@@ -24,7 +20,12 @@ class Todo
   end
 
   def to_displayable_string
-    todo = @box + " " + @text
+    if !@completed
+      box = "[ ]"
+    else
+      box = "[X]"
+    end
+    todo = box + " " + @text
     if due_today?
       return todo
     end
@@ -54,8 +55,7 @@ class TodosList
   end
 
   def to_displayable_list
-    @todos = @todos.map { |todo| todo.to_displayable_string }
-    @todos.join("\n")
+    @todos.map { |todo| todo.to_displayable_string }.join("\n")
   end
 end
 
